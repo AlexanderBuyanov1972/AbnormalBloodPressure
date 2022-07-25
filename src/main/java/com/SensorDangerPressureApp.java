@@ -5,6 +5,7 @@ import com.model.Sensor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -19,8 +20,11 @@ public class SensorDangerPressureApp {
     }
 
     @Bean
-    Consumer<Sensor> receive() {
-       return this::printJsonSensor;
+    Consumer<String> receive() {
+        return (line) -> {
+            Sensor sensor = getSensor(line);
+            printJsonSensor(sensor);
+         };
     }
 
     private Sensor getSensor(String line) {
@@ -38,7 +42,7 @@ public class SensorDangerPressureApp {
         System.out.println("data time : " + sensor.time);
         System.out.println("UPPER BLOOD PRESSURE: " + sensor.dataUBP);
         System.out.println("LOWER BLOOD PRESSURE: " + sensor.dataLBP);
-        System.out.println("pulls : " + sensor.dataPulls);
+        System.out.println("pulls : " + sensor.dataPulse);
         System.out.println("sugar in blood : " + sensor.dataSugar);
         System.out.println("*********************************************");
     }

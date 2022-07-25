@@ -14,6 +14,6 @@ public class Sensor {
     public int id;
     public int dataUBP;
     public int dataLBP;
-    public int dataPulls;
+    public int dataPulse;
     public int dataSugar;
 }
